@@ -11,6 +11,8 @@ public class PlayerEmotions : ImageResultsListener
     public float currentDisgust;
     public float currentEyeClosure;
     public float currentJoy;
+    public float currentSadness;
+    public float currentSurprise;
     public float currentInterocularDistance;
     public float currentAttention;
     public float currentEngagement;
@@ -20,6 +22,7 @@ public class PlayerEmotions : ImageResultsListener
     Transform playerIcon;
     Transform player;
     Image playerIconImage;
+    public int frameNo = 0;
 
     public override void onFaceFound(float timestamp, int faceId)
     {
@@ -32,6 +35,8 @@ public class PlayerEmotions : ImageResultsListener
         //setIcon(20);
         currentValence = 0;
         currentJoy = 0;
+        currentSadness = 0;
+        currentSurprise = 0;
         currentAnger = 0;
         currentSmile = 0;
         currentDisgust = 0;
@@ -45,8 +50,13 @@ public class PlayerEmotions : ImageResultsListener
 
     public override void onImageResults(Dictionary<int, Face> faces)
     {
-        Debug.Log("Got face results");
-
+        //Debug.Log("Got face results");
+        Debug.Log("Frame Number: " + frameNo++);
+        if(frameNo % 10 == 0)
+        {
+            Debug.Log(currentValence);
+            //hello
+        }
         foreach (KeyValuePair<int, Face> pair in faces)
         {
             int FaceId = pair.Key;  // The Face Unique Id.
@@ -56,7 +66,9 @@ public class PlayerEmotions : ImageResultsListener
             face.Emotions.TryGetValue(Emotions.Valence, out currentValence);
             face.Emotions.TryGetValue(Emotions.Anger, out currentAnger);
             face.Emotions.TryGetValue(Emotions.Joy, out currentJoy);
-            face.Emotions.TryGetValue(Emotions.Disgust, out currentDisgust);
+            face.Emotions.TryGetValue(Emotions.Sadness, out currentSadness);
+            face.Emotions.TryGetValue(Emotions.Surprise, out currentSurprise);
+            //face.Emotions.TryGetValue(Emotions.Disgust, out currentDisgust);
             face.Emotions.TryGetValue(Emotions.Engagement, out currentEngagement);
 
             //Retrieve the Smile Score

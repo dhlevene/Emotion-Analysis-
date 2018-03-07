@@ -70,13 +70,13 @@ namespace Affdex
             audioSource.Play();
 
             Debug.Log("Playing Video");
-            /*while (videoPlayer.isPlaying)
+            while (videoPlayer.isPlaying)
             {
                 Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
                 yield return null;
             }
 
-            Debug.Log("Done Playing Video");*/
+            Debug.Log("Done Playing Video");
         }
 
 
@@ -111,7 +111,6 @@ namespace Affdex
 
                 //Copy the movie texture to the render texture
                 Graphics.Blit(videoPlayer.texture, rt);
-
 
                 //Read the render texture to our temporary texture
                 t2d.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
