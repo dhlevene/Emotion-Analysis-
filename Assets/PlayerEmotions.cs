@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using Affdex;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PlayerEmotions : ImageResultsListener
 {
@@ -108,14 +109,14 @@ public class PlayerEmotions : ImageResultsListener
     }
 
 
-    public float getEmotion(int choice)
+    public ArrayList getEmotion(int choice)
     {
-        if (choice == 1)
-        {
-            return currentJoy;
-        }
-
-        return currentJoy;
+        ArrayList emotions = new ArrayList();
+            emotions.Add(currentJoy);
+            emotions.Add(currentSadness);
+            emotions.Add(currentSurprise);
+            emotions.Add(currentDisgust);
+        return emotions;
     }
     public void pauseStream()
     {
