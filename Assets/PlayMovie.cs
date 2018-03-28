@@ -9,10 +9,12 @@ namespace Affdex
     public class PlayMovie : MonoBehaviour, IDetectorInput
     {
         //public MovieTexture movie;
-        public VideoClip videoToPlay;
+        //public VideoClip videoToPlay;
         private VideoPlayer videoPlayer;
         private VideoSource videoSource;
         private AudioSource audioSource;
+
+        public GameObject movie;
 
         public float sampleRate = 20;
         private Texture2D t2d;
@@ -34,21 +36,21 @@ namespace Affdex
         {
             Application.runInBackground = true;
             //movie.Play();
-            t2d = new Texture2D(checked((int)videoToPlay.width), checked((int)videoToPlay.height), TextureFormat.RGB24, false);
-            StartCoroutine(playVideo());
+            t2d = new Texture2D(checked((int)movie.GetComponent<VideoPlayer>().clip.width), checked((int)movie.GetComponent<VideoPlayer>().clip.height), TextureFormat.RGB24, false);
+            //StartCoroutine(playVideo());
             detector = GetComponent<Detector>();
         }
 
         IEnumerator playVideo()
         {
-            videoPlayer = gameObject.AddComponent<VideoPlayer>();
-            audioSource = gameObject.AddComponent<AudioSource>();
+           videoPlayer = gameObject.AddComponent<VideoPlayer>();
+           audioSource = gameObject.AddComponent<AudioSource>();
 
             videoPlayer.playOnAwake = false;
             audioSource.playOnAwake = false;
 
             videoPlayer.source = VideoSource.VideoClip;
-            videoPlayer.clip = videoToPlay;
+            //videoPlayer.clip = videoToPlay;
             videoPlayer.Prepare();
 
             while (!videoPlayer.isPrepared)
@@ -72,7 +74,7 @@ namespace Affdex
             Debug.Log("Playing Video");
             while (videoPlayer.isPlaying)
             {
-                Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
+                //Debug.LogWarning("Video Time: " + Mathf.FloorToInt((float)videoPlayer.time));
                 yield return null;
             }
 
@@ -104,13 +106,13 @@ namespace Affdex
 
         private void ProcessFrame()
         {
-            if (this.videoPlayer != null)
+            if (movie.GetComponent<VideoPlayer>() != null)
             {
-                RenderTexture rt = RenderTexture.GetTemporary(checked((int)videoToPlay.width), checked((int)videoToPlay.height), 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, 1);
+                RenderTexture rt = RenderTexture.GetTemporary(checked((int)movie.GetComponent<VideoPlayer>().clip.width), checked((int)movie.GetComponent<VideoPlayer>().clip.height), 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, 1);
                 RenderTexture.active = rt;
 
                 //Copy the movie texture to the render texture
-                Graphics.Blit(videoPlayer.texture, rt);
+                Graphics.Blit(movie.GetComponent<VideoPlayer>().texture, rt);
 
                 //Read the render texture to our temporary texture
                 t2d.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);

@@ -1,24 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class webcam : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-        WebCamDevice[] devices = WebCamTexture.devices;
-        WebCamTexture webcamTexture = new WebCamTexture();
-
-        if (devices.Length > 0)
-        {
-            Debug.Log("Detected Webcam is: " + devices[0].name);
-            webcamTexture.deviceName = devices[0].name;
-            webcamTexture.Play();
-        }
+public class webcam : MonoBehaviour
+{
+    public RawImage rawimage;
+    public WebCamTexture webcamTexture;
+    void Start()
+    {
+        webcamTexture = new WebCamTexture();
+        rawimage.texture = webcamTexture;
+        rawimage.material.mainTexture = webcamTexture;
+        webcamTexture.requestedHeight = 1080 ;
+        webcamTexture.requestedWidth = 1920;
+        webcamTexture.Play();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
