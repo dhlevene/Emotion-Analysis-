@@ -36,18 +36,16 @@ public class ButtonFunctions : MonoBehaviour {
     public void enableTag()
     {
         panel.SetActive(true);
-        pauseButton();
     }
 
     public void cancelButton()
     {
         panel.SetActive(false);
-        playButton();
     }
 
     public void emotionSubmit()
     {
-        ArrayList emotions = new ArrayList();
+        List<float> emotions = new List<float>();
         Debug.Log(tag.GetComponent<InputField>().text);
         Debug.Log(description.GetComponent<InputField>().text);
         emotions = handler.getEmotion(1);

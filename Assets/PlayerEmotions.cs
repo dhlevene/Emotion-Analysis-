@@ -109,13 +109,15 @@ public class PlayerEmotions : ImageResultsListener
     }
 
 
-    public ArrayList getEmotion(int choice)
+    public List<float> getEmotion(int choice)
     {
-        ArrayList emotions = new ArrayList();
+        List<float> emotions = new List<float>();
             emotions.Add(currentJoy);
             emotions.Add(currentSadness);
-            emotions.Add(currentSurprise);
+            emotions.Add(currentAnger);
             emotions.Add(currentDisgust);
+            emotions.Add(currentSurprise);
+            
         return emotions;
     }
     public void pauseStream()

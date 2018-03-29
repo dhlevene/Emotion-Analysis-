@@ -72,10 +72,10 @@ namespace Affdex
                 if (device.name != "Null")
                 {
 
-                    cameraTexture = cam.webcamTexture;
+                    //cameraTexture = cam.webcamTexture;
                     cameraTexture.deviceName = device.name;
                     cameraTexture.requestedFPS = (int)sampleRate;
-                    //cameraTexture = new WebCamTexture(device.name, targetWidth, targetHeight, (int)sampleRate);
+                    cameraTexture = new WebCamTexture(device.name, targetWidth, targetHeight, (int)sampleRate);
                     cameraTexture.Play();
                 }
             }
@@ -92,10 +92,10 @@ namespace Affdex
                 {
                         cameraTexture.Stop();
                         device = d;
-                        cameraTexture = cam.webcamTexture;
+                        //cameraTexture = cam.webcamTexture;
                         cameraTexture.deviceName = device.name;
                         cameraTexture.requestedFPS = (int)sampleRate;
-                    //cameraTexture = new WebCamTexture(device.name, targetWidth, targetHeight, (int)sampleRate);
+                    cameraTexture = new WebCamTexture(device.name, targetWidth, targetHeight, (int)sampleRate);
                     cameraTexture.Play();
                 }
                 else if (d.isFrontFacing == isFrontFacing)
