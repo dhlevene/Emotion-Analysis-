@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class webcam : MonoBehaviour
 {
     public RawImage rawimage;
-    public WebCamTexture webcamTexture;
+    public Affdex.CameraInput webcamSource;
     void Start()
     {
-        webcamTexture = new WebCamTexture();
-        rawimage.texture = webcamTexture;
-        rawimage.material.mainTexture = webcamTexture;
-        webcamTexture.requestedHeight = 1080 ;
-        webcamTexture.requestedWidth = 1920;
-        webcamTexture.Play();
+        WebCamTexture feed = webcamSource.cameraTexture;
+        if (feed.isPlaying)
+        {
+            rawimage.texture = feed;
+            rawimage.material.mainTexture = feed;
+        }
     }
 }

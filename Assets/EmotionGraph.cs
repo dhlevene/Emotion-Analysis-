@@ -17,7 +17,7 @@ namespace EmotionGraph
         static int IRRELEVANT = 10;
 
         // list & ordering of emotions considered by the program. List should be changed with caution
-        static List<string> EMOTIONS = new List<string>() { "Joy", "Sad", "Anger", "Disgust", "Suprise" };
+        static List<string> EMOTIONS = new List<string>() { "Joy", "Sad", "Anger", "Disgust", "Surprise" };
         static int NUM_EMOTIONS = EMOTIONS.Count;
 
         // for finding a node, these are used to determine if a string we've chosen is the best fit.

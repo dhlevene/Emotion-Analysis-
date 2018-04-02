@@ -5,21 +5,23 @@ using UnityEngine.UI;
 
 public class ButtonFunctions : MonoBehaviour {
 
-    public PlayerEmotions handler;
+    public PlayerEmotions affectiva;
     public LiveToggle toggle;
+    public GraphFunctions graphHandler;
     public GameObject panel;
-    public GameObject tag;
-    public GameObject description;
-
+    public GameObject tagTitle;
+    public GameObject tagDescription;
+    List<int> emotionValues;
+    public Affdex.Detector detector;
 
     public void playButton()
     {
-        handler.resumeStream();
+        affectiva.resumeStream();
     }
 
     public void pauseButton()
     {
-        handler.pauseStream();
+        affectiva.pauseStream();
     }
 
     public void toggleYes()
@@ -36,31 +38,38 @@ public class ButtonFunctions : MonoBehaviour {
     public void enableTag()
     {
         panel.SetActive(true);
+        affectiva.pauseStream();
+        //detector.StopDetector();
     }
 
     public void cancelButton()
     {
+        affectiva.resumeStream();
+        tagTitle.GetComponent<InputField>().text = "";
         panel.SetActive(false);
+        //detector.StartDetector();
     }
 
     public void emotionSubmit()
     {
-        List<float> emotions = new List<float>();
-        Debug.Log(tag.GetComponent<InputField>().text);
-        Debug.Log(description.GetComponent<InputField>().text);
-        emotions = handler.getEmotion(1);
-        Debug.Log("Tag Title: " + tag.GetComponent<InputField>().text + "    Joy is: " + emotions[0] + 
-            ", Sadness is: " + emotions[1] + ", Surprise is: " + emotions[2] + ", Disgust is: " + emotions[3]);
+        emotionValues = affectiva.getEmotions();
+        string title = tagTitle.GetComponent<InputField>().text;
+        graphHandler.addToGraph(emotionValues, title);
+
+        Debug.Log("Tag Title: " + tagTitle.GetComponent<InputField>().text + "    Joy is: " + emotionValues[0] + 
+            ", Sadness is: " + emotionValues[1] + ", Anger is: " + emotionValues[2] + ", Disgust is: " + emotionValues[3] + ", Surprise is: " + emotionValues[4]);
         panel.SetActive(false);
+        tagTitle.GetComponent<InputField>().text = "";
         playButton();
+        //detector.StartDetector();
     }
 
     public void attentionSubmit()
     {
-        
-        Debug.Log(tag.GetComponent<InputField>().text);
-        Debug.Log(description.GetComponent<InputField>().text);
+        Debug.Log(tagTitle.GetComponent<InputField>().text);
+        Debug.Log(tagDescription.GetComponent<InputField>().text);
         panel.SetActive(false);
+        tagTitle.GetComponent<InputField>().text = "";
         playButton();
     }
 

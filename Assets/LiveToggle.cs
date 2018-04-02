@@ -24,8 +24,8 @@ public class LiveToggle : MonoBehaviour {
 
         if (isOn)
         {
-            GameObject.Find("Main Camera").GetComponent<Affdex.CameraInput>().enabled = false;
-            GameObject.Find("Main Camera").GetComponent<Affdex.PlayMovie>().enabled = true;
+            GameObject.Find("Background Processes").GetComponent<Affdex.CameraInput>().enabled = false;
+            GameObject.Find("Background Processes").GetComponent<Affdex.PlayMovie>().enabled = true;
             video.SetActive(true);
             track.SetActive(true);
             webcam.SetActive(false);
@@ -39,8 +39,8 @@ public class LiveToggle : MonoBehaviour {
             track.SetActive(false);
             play_btn.SetActive(false);
             pause_btn.SetActive(false);
-            GameObject.Find("Main Camera").GetComponent<Affdex.PlayMovie>().enabled = false;
-            GameObject.Find("Main Camera").GetComponent<Affdex.CameraInput>().enabled = true;
+            GameObject.Find("Background Processes").GetComponent<Affdex.PlayMovie>().enabled = false;
+            GameObject.Find("Background Processes").GetComponent<Affdex.CameraInput>().enabled = true;
             webcam.SetActive(true);
 
 
