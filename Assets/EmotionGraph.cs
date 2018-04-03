@@ -14,10 +14,10 @@ namespace EmotionGraph
         static string OFP_NAME = "TestGraphOutput.txt";
 
         // if values are too small, we should ignore them. This changes what value is considered "too small"
-        static int IRRELEVANT = 10;
+        static int IRRELEVANT = 15;
 
         // list & ordering of emotions considered by the program. List should be changed with caution
-        static List<string> EMOTIONS = new List<string>() { "Joy", "Sad", "Anger", "Disgust", "Surprise" };
+        static List<string> EMOTIONS = new List<string>() { "Joy", "Sad", "Anger", "Disgust", "Suprise" };
         static int NUM_EMOTIONS = EMOTIONS.Count;
 
         // for finding a node, these are used to determine if a string we've chosen is the best fit.
@@ -42,21 +42,12 @@ namespace EmotionGraph
                 Node graph = InitGraph(IFP_NAME);
 
                 Console.WriteLine("Done forming graph base. Adding test nodes...");
-                graph.AddNode(new List<int>() { 70, 30, 0, 0, 0 }, "Neutral");
+                graph.AddNode(new List<int>() { 20, 0, 0, 0, 0 }, "Faint Smile");
                 graph.AddNode(new List<int>() { 0, 40, 0, 60, 0 }, "Depression");
                 graph.AddNode(new List<int>() { 0, 0, 40, 60, 0 }, "Horror");
 
                 Console.WriteLine("Testing finding nodes...");
-
-                tempListInt = new List<int>() { 99, 0, 1, 74, 14 };
-
-                temp = graph.FindEmotion(new List<int>() { 70, 30, 0, 0, 0});
-                Console.WriteLine("Graph returned " + temp + ". Was expecting Neutral");
-
-                temp = graph.FindEmotion(tempListInt);
-                Console.WriteLine("Graph returned " + temp + ". Was expecting Joy");
-
-                Console.WriteLine("Previous search was done with 5 values. Should contain 5 still. Contains " + tempListInt.Count);
+                string emotion = graph.FindEmotion(new List<int>() { 20, 0, 0, 0, 0 });
 
                 Console.WriteLine("Testing write to file");
                 OutputEmotionsToFile(GRAPH_LISTINGS, OFP_NAME);
@@ -245,6 +236,11 @@ namespace EmotionGraph
                 string emo;
                 List<string> emotions = new List<string>();
                 emotions.AddRange(EMOTIONS);
+
+                if(values[GetPeakIndex(values)] < IRRELEVANT)
+                {
+                    return "neutral";
+                }
 
                 emo = this.FindNode(values, emotions);
                 if (emo == "")

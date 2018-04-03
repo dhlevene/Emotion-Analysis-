@@ -12,15 +12,26 @@ public class LiveToggle : MonoBehaviour {
     public GameObject play_btn;
     public GameObject pause_btn;
     public GameObject checker;
+    public ButtonFunctions notifier;
+    bool firstTime = true;
     public void Check()
     {
-        isOn = !isOn;
-        checker.SetActive(true);
-        video.GetComponent<VideoPlayer>().Pause();
+        if (firstTime == true)
+        {
+            isOn = !isOn;
+            firstTime = false;
+        }
+        else
+        {
+            isOn = !isOn;
+            checker.SetActive(true);
+            video.GetComponent<VideoPlayer>().Pause();
+        }
     }
 
     public void Switch()
     {
+        Debug.Log(isOn);
 
         if (isOn)
         {
@@ -31,6 +42,7 @@ public class LiveToggle : MonoBehaviour {
             webcam.SetActive(false);
             play_btn.SetActive(true);
             pause_btn.SetActive(true);
+            notifier.addToScrollView("Video analysis started:");
 
         }
         else
@@ -42,13 +54,16 @@ public class LiveToggle : MonoBehaviour {
             GameObject.Find("Background Processes").GetComponent<Affdex.PlayMovie>().enabled = false;
             GameObject.Find("Background Processes").GetComponent<Affdex.CameraInput>().enabled = true;
             webcam.SetActive(true);
-
-
-
+            notifier.addToScrollView("Webcam capture started:");
         }
         //GameObject.Find("Main Camera").GetComponent<Affdex.PlayMovie>().enabled = !GameObject.Find("Main Camera").GetComponent<Affdex.PlayMovie>().enabled;
         //GameObject.Find("Main Camera").GetComponent<Affdex.CameraInput>().enabled = !GameObject.Find("Main Camera").GetComponent<Affdex.CameraInput>().enabled;
         
+    }
+
+    public void toggleFirstTime()
+    {
+        firstTime = !firstTime;
     }
 
 

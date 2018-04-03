@@ -12,7 +12,10 @@ public class ButtonFunctions : MonoBehaviour {
     public GameObject tagTitle;
     public GameObject tagDescription;
     List<int> emotionValues;
+    int yValue = -10;
     public Affdex.Detector detector;
+    public GameObject scrollView;
+    public GameObject TextPrefab;
 
     public void playButton()
     {
@@ -32,6 +35,18 @@ public class ButtonFunctions : MonoBehaviour {
     public void toggleNo()
     {
         toggle.GetComponent<Toggle>().isOn = !toggle.GetComponent<Toggle>().isOn;
+        panel.SetActive(false);
+    }
+
+    public void toggleVideo()
+    {
+        toggle.toggleFirstTime();
+        panel.SetActive(false);
+    }
+    public void toggleWebcam()
+    {
+        toggle.GetComponent<Toggle>().isOn = !toggle.GetComponent<Toggle>().isOn;
+        toggle.Switch();
         panel.SetActive(false);
     }
 
@@ -58,6 +73,9 @@ public class ButtonFunctions : MonoBehaviour {
 
         Debug.Log("Tag Title: " + tagTitle.GetComponent<InputField>().text + "    Joy is: " + emotionValues[0] + 
             ", Sadness is: " + emotionValues[1] + ", Anger is: " + emotionValues[2] + ", Disgust is: " + emotionValues[3] + ", Surprise is: " + emotionValues[4]);
+
+        addToScrollView(title);
+
         panel.SetActive(false);
         tagTitle.GetComponent<InputField>().text = "";
         playButton();
@@ -71,6 +89,16 @@ public class ButtonFunctions : MonoBehaviour {
         panel.SetActive(false);
         tagTitle.GetComponent<InputField>().text = "";
         playButton();
+    }
+
+    public void addToScrollView(string textToAdd)
+    {
+        GameObject go = Instantiate(TextPrefab);
+        go.transform.SetParent(scrollView.transform);
+        go.transform.localScale = Vector3.one;
+        go.transform.localPosition = new Vector3(10, yValue, 0);
+        yValue = yValue - 30;
+        go.GetComponent<Text>().text = textToAdd;
     }
 
 }
